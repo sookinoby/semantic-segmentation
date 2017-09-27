@@ -58,23 +58,29 @@ def layers(vgg_layer3_out, vgg_layer4_out, vgg_layer7_out, num_classes):
     :return: The Tensor for the last layer of output
     """
     # TODO: Implement function
-    conv1x1_layer7 = tf.layers.conv2d(vgg_layer7_out,num_classes,1,padding='same',kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
-    conv1x1_layer4 = tf.layers.conv2d(vgg_layer4_out, num_classes, 1, padding='same',
-                               kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
-    conv1x1_layer3 = tf.layers.conv2d(vgg_layer3_out, num_classes, 1, padding='same',
-                               kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    conv1x1_layer7 = tf.layers.conv2d(vgg_layer7_out,num_classes,1,padding='same',  kernel_initializer= tf.random_normal_initializer(stddev=0.01),
+                                   kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
+
+    conv1x1_layer4 = tf.layers.conv2d(vgg_layer4_out, num_classes, 1, padding='same',  kernel_initializer= tf.random_normal_initializer(stddev=0.01),
+                                   kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
+
+    conv1x1_layer3 = tf.layers.conv2d(vgg_layer3_out, num_classes, 1, padding='same',  kernel_initializer= tf.random_normal_initializer(stddev=0.01),
+                                   kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
 
 
-    up_sample_1 = tf.layers.conv2d_transpose(conv1x1_layer7, num_classes, 4,2, padding='same',
-                               kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+
+    up_sample_1 = tf.layers.conv2d_transpose(conv1x1_layer7, num_classes, 4,2, padding='same',  kernel_initializer= tf.random_normal_initializer(stddev=0.01),
+                                   kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
+
     add_1 = tf.add(up_sample_1, conv1x1_layer4);
 
-    up_sample_2 = tf.layers.conv2d_transpose(add_1, num_classes, 4, 2, padding='same',
-                                                  kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    up_sample_2 = tf.layers.conv2d_transpose(add_1, num_classes, 4, 2, padding='same',  kernel_initializer= tf.random_normal_initializer(stddev=0.01),
+                                   kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
+
     add_2 = tf.add(up_sample_2, conv1x1_layer3);
 
-    up_sample_3 = tf.layers.conv2d_transpose(add_2, num_classes, 16, 8, padding='same',
-                                                  kernel_regularizer=tf.contrib.layers.l2_regularizer(1e-3))
+    up_sample_3 = tf.layers.conv2d_transpose(add_2, num_classes, 16, 8, padding='same',   kernel_initializer= tf.random_normal_initializer(stddev=0.01),
+                                   kernel_regularizer= tf.contrib.layers.l2_regularizer(1e-3))
 
     return up_sample_3;
 tests.test_layers(layers)
@@ -120,7 +126,7 @@ def train_nn(sess, epochs, batch_size, get_batches_fn, train_op, cross_entropy_l
                                feed_dict={input_image: image,
                                           correct_label: label,
                                           keep_prob: 0.70,
-                                          learning_rate: 0.0005})
+                                          learning_rate: 0.0001})
             print(epoch)
             if epoch % 2 == 0:
                 print("Epoch {}/{}...".format(epoch, epochs),
@@ -136,7 +142,7 @@ def run():
     runs_dir = './runs'
     tests.test_for_kitti_dataset(data_dir)
     epochs = 6
-    batch_size = 16
+    batch_size = 64
 
     # Download pretrained vgg model
     helper.maybe_download_pretrained_vgg(data_dir)
