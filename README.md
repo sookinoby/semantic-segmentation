@@ -13,24 +13,34 @@ Make sure you have the following is installed:
 Download the [Kitti Road dataset](http://www.cvlibs.net/datasets/kitti/eval_road.php) from [here](http://www.cvlibs.net/download.php?file=data_road.zip).  Extract the dataset in the `data` folder.  This will create the folder `data_road` with all the training a test images.
 
 ### Start
-##### Implement
-Implement the code in the `main.py` module indicated by the "TODO" comments.
-The comments indicated with "OPTIONAL" tag are not required to complete.
-##### Run
+The FCN implemented was based on this [paper](https://people.eecs.berkeley.edu/~jonlong/long_shelhamer_fcn.pdf). The neural network uses a vgg model where the dense layer is replaced with 1x1 convolutinal network, followed by up sampling and addition layers. The training was done on google cloud instance as it was computationally intensive and python instance crashed.
+
+### Implementataion
+The following hyper parameters were used
+1. The learning rate was set to 0.0001. Higher learning rate yielded bad results
+2. The keep probability(drop out) was set to 0.70 to prevent over fitting
+3. The model was trained for 6 epoch and batch size was set to 16. Higher batch size caused resource exhaustion exception.
+
+
+### Run
 Run the following command to run the project:
 ```
 python main.py
 ```
 **Note** If running this in Jupyter Notebook system messages, such as those regarding test status, may appear in the terminal rather than the notebook.
 
-### Submission
-1. Ensure you've passed all the unit tests.
-2. Ensure you pass all points on [the rubric](https://review.udacity.com/#!/rubrics/989/view).
-3. Submit the following in a zip file.
- - `helper.py`
- - `main.py`
- - `project_tests.py`
- - Newest inference images from `runs` folder
+### Results
+
+The neural network successfully classified road pixels vs non road pixels. Some of the results are shown below
+
+![Alt text](images/1.png?raw=true "Result 1")
+![Alt text](images/2.png?raw=true "Result 2")
+![Alt text](images/3.png?raw=true "Result 3")
+![Alt text](images/4.png?raw=true "Result 4")
+![Alt text](images/5.png?raw=true "Result 5")
+
+
+
+
  
- ## How to write a README
-A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
+
