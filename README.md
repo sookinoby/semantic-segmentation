@@ -33,11 +33,11 @@ python main.py
 
 The neural network successfully classified road pixels vs non road pixels. Some of the results are shown below
 
-![Result 1](images/1.png?raw=true "Result 1")
-![Result 2](images/2.png?raw=true "Result 2")
-![Result 3](images/3.png?raw=true "Result 3")
-![Result 4](images/4.png?raw=true "Result 4")
-![Result 5](images/5.png?raw=true "Result 5")
+![Result 1](result/1.png?raw=true "Result 1")
+![Result 2](result/2.png?raw=true "Result 2")
+![Result 3](result/3.png?raw=true "Result 3")
+![Result 4](result/4.png?raw=true "Result 4")
+![Result 5](result/5.png?raw=true "Result 5")
 
 
 
